@@ -60,7 +60,7 @@ def get_info_from_plyr_page(data: list):
 		tournament_info = [player_details[0], birthdate, year, date, event_type, location, rank, fivbID, nationality]
 
 		data.append(tournament_info)
-		print(name)
+	print(name)
 
 now = datetime.now().strftime("%H-%M_on_%d-%m-%Y")
 
@@ -131,7 +131,7 @@ with webdriver.Chrome(service=srv, options=op) as drv:
 print(data)
 
 # create output csv with the data
-with open(f'output_{now}.csv', 'w', newline='') as outfile:
+with open(f'\outputs\output_{now}.csv', 'w', newline='') as outfile:
 	writer = csv.writer(outfile)
 	writer.writerow(["Player Name", "Date of Birth", "Event Year", "Event Date", "Event Type", "Location", "Rank", "fivbID", "Nationality"])
 	for row in data:

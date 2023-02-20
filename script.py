@@ -38,7 +38,12 @@ def get_info_from_plyr_page(data: list):
 	# if fivbID ends up being a string, then that person has 7 profile items and we need to re-insert them
 	if fivbID[0].isalpha():
 		fivbID = player_details[3]
-		nationality = wait_clickable_then_find(profile_item_7_css).text
+		try:
+			nationality = wait_clickable_then_find(profile_item_7_css).text
+		except (selenium.common.exceptions.NoSuchElementException, selenium.common.exceptions.TimeoutException):
+			missing_player = [name, "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA"]
+			data.append(missing_player)
+			return
 
 	tournaments = wait_clickable_then_find(tournament_info_css)
 	tournaments = tournaments.text.splitlines()[1:]
@@ -102,7 +107,7 @@ with webdriver.Chrome(service=srv, options=op) as drv:
 		try:
 			searchbar = wait_clickable_then_find(searchbar_valid_css, 5)
 		except (selenium.common.exceptions.NoSuchElementException, selenium.common.exceptions.TimeoutException):
-			searchbar = wait_clickable_then_find(searchbar_dirty_css, 5)
+			searchbar = wait_clickable_then_find(searchbar_dirty_css, 1)
 
 		searchbar.click()
 		searchbar.send_keys(name)
@@ -125,10 +130,8 @@ with webdriver.Chrome(service=srv, options=op) as drv:
 		try:
 			wait_clickable_then_find(searchbar_valid_css, 3).clear()
 		except (selenium.common.exceptions.NoSuchElementException, selenium.common.exceptions.TimeoutException):
-			wait_clickable_then_find(searchbar_dirty_css, 3).clear()
+			wait_clickable_then_find(searchbar_dirty_css, 1).clear()
 
-
-print(data)
 
 # create output csv with the data
 with open(f'\outputs\output_{now}.csv', 'w', newline='') as outfile:

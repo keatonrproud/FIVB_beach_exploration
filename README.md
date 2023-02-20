@@ -77,6 +77,7 @@ Clone the repo, install the required scripts, and get to exploring:
 1) View the sample_output file in outputs to see what your end data will look like.
 2) Replace the player names in player_list.csv with the players you want to search for. Some player names can be tricky due to nicknames, which are common in the database.
 3) Run the script and view your data!
+
 3b) If players you inputted return a missing player row in the output, you may need to check for their official name as stored in the database.
 
 ### Prerequisites
